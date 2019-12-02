@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Keki</string>
+    <string name="quequi">¿Qué quieres hacer hoy?</string>
+    <string name="K">K</string>
+    <string name="keki">KeKi</string>
+    <string name="tel">Número celular:</string>
+    <string name="comp">Comprobar</string>
+    <string name="form">Registro</string>
+    <string name="c1">Usuario</string>
+    <string name="c2">Nombre</string>
+    <string name="c3">Fecha de nacimiento</string>
+    <string name="regi">Registrarse</string>
+    <string name="title_activity_inicio2">Inicio2</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_profile">Perfil</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_activity_home">Eventos</string>
+    <string name="title_activity_index">Index</string>
+    <string name="title_create">Crear</string>
+    <string name="content_description">Img</string>
+</resources>
