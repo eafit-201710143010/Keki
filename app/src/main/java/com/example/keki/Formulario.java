@@ -8,46 +8,50 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import com.example.keki.ui.dialog.DatePickerFragment;
+import java.util.Calendar;
 
 public class Formulario extends AppCompatActivity {
 
     EditText etDate;
-    TextView tv;
+
+    public final Calendar c = Calendar.getInstance();
+
+    private static final String CERO = "0";
+    private static final String BARRA = "/";
+
+    final int mes = c.get(Calendar.MONTH);
+    final int dia = c.get(Calendar.DAY_OF_MONTH);
+    final int anio = c.get(Calendar.YEAR);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
-        tv = (TextView) findViewById(R.id.textView4);
         etDate = (EditText) findViewById(R.id.editText4);
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.editText4:
-                    showDatePickerDialog();
-                    break;
-                }
+                obtenerFecha();
             }
         });
     }
 
-    private void showDatePickerDialog() {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+    private void obtenerFecha(){
+        DatePickerDialog recogerFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // +1 because January is zero
-                String selectedDate = "hola";
-                selectedDate = day + " / " + (month+1) + " / " + year;
-                tv.setText(selectedDate);
-                etDate.setText(selectedDate);
-            }
-        });
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                final int mesActual = month + 1;
+                String diaFormateado = (dayOfMonth < 10)? CERO + String.valueOf(dayOfMonth):String.valueOf(dayOfMonth);
+                String mesFormateado = (mesActual < 10)? CERO + String.valueOf(mesActual):String.valueOf(mesActual);
 
-        newFragment.show(this.getSupportFragmentManager(), "datePicker");
+                etDate.setText(diaFormateado + BARRA + mesFormateado + BARRA + year);
+
+
+            }
+        },anio, mes, dia);
+
+        recogerFecha.show();
     }
 
     public void siguiente(View view){

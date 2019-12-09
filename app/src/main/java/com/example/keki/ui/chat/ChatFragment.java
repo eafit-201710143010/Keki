@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,23 +14,22 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.keki.R;
+import com.example.keki.ui.BaseDeDatos;
 
 public class ChatFragment extends Fragment {
 
-    private ChatViewModel chatViewModel;
+    ListView lvChats;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        chatViewModel =
-                ViewModelProviders.of(this).get(ChatViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_chat, container, false);
-        final TextView textView = root.findViewById(R.id.text_chat);
-        chatViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+        AdaptadorChats adap = new AdaptadorChats(getActivity(), BaseDeDatos.usuarios[0].getChats());
+
+        lvChats = root.findViewById(R.id.chatList);
+        lvChats.setAdapter(adap);
+
         return root;
     }
 }

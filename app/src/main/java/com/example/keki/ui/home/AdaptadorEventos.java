@@ -16,11 +16,12 @@ import com.example.keki.R;
 
 import java.util.List;
 
-public class Adaptador extends BaseAdapter {
+public class AdaptadorEventos extends BaseAdapter {
+
     private Context context;
     private List<Evento> eventoList;
 
-    public Adaptador(Context context, List<Evento> eventoList){
+    public AdaptadorEventos(Context context, List<Evento> eventoList){
         this.eventoList = eventoList;
         this.context = context;
     }
@@ -64,6 +65,5 @@ public class Adaptador extends BaseAdapter {
 
         return convertView;
     }
-
 
 }

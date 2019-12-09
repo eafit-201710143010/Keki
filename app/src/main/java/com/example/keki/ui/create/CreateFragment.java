@@ -16,20 +16,11 @@ import com.example.keki.R;
 
 public class CreateFragment extends Fragment {
 
-    private CreateViewModel createViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        createViewModel =
-                ViewModelProviders.of(this).get(CreateViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_create, container, false);
-        final TextView textView = root.findViewById(R.id.text_create);
-        createViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 }
