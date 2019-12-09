@@ -8,7 +8,7 @@ import android.os.Handler;
 
 public class Inicio extends AppCompatActivity {
 
-    long DURACION = 1500;
+    long DURACION = 750;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

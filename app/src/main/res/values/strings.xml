@@ -18,4 +18,10 @@
     <string name="title_activity_index">Index</string>
     <string name="title_create">Crear</string>
     <string name="content_description">Img</string>
+    <string name="cargar">Cargar imagen</string>
+    <string name="tituloEvento">Título del evento</string>
+    <string name="fecha">Fecha</string>
+    <string name="hora">Hora</string>
+    <string name="añadir">Crear Evento</string>
+    <string name="error1">Número inválido, ingrese nuevamente</string>
 </resources>

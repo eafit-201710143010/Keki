@@ -18,7 +18,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private ListView lv1;
-    private List<Evento> eventos = Arrays.asList(BaseDeDatos.event);
+    private List<Evento> eventos = BaseDeDatos.eventos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

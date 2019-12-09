@@ -13,21 +13,24 @@ import com.example.keki.R;
 import java.util.List;
 
 public class AdaptadorChats extends BaseAdapter {
-
+//La Clase adaptadorChats sirve para adoptar chats a las lista
     private Context context;
     private List<Chat> chatList;
 
     public AdaptadorChats(Context context, List<Chat> chatList){
+        //Metodo constructor del adaptador que recibe como parametros el contexto actual y la lista de chats
         this.context = context;
         this.chatList = chatList;
     }
 
     @Override
+    //Metodo para obtener la cantidad de chats
     public int getCount() {
         return chatList.size();
     }
 
     @Override
+    //obtener un chat dentro de la lista een la posición asignada
     public Object getItem(int position) {
         return chatList.get(position);
     }
@@ -38,6 +41,7 @@ public class AdaptadorChats extends BaseAdapter {
     }
 
     @Override
+    //generador de las vistas de cada chat
     public View getView(int position, View convertView, ViewGroup parent) {
         Chat item = (Chat) getItem(position);
 

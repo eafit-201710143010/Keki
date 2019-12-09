@@ -12,7 +12,7 @@ import com.example.keki.ui.BaseDeDatos;
 
 public class MainActivity extends AppCompatActivity {
 
-    long DURACION = 1500;
+    long DURACION = 600;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
