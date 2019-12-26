@@ -12,11 +12,6 @@
         android:title="@string/title_profile" />
 
     <item
-        android:id="@+id/navigation_chat"
-        android:icon="@drawable/ic_chat_bubble_black_24dp"
-        android:title="@string/title_chat" />
-
-    <item
         android:id="@+id/navigation_create"
         android:icon="@drawable/ic_add_circle_outline_black_24dp"
         android:title="@string/title_create" />

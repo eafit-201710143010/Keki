@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditarPerfil">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/tittle_bar"
+            android:layout_width="413dp"
+            android:layout_height="87dp"
+            android:background="#6A1B9A" >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/editPerfil"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+                app:fontFamily="@font/product_blod_italic" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="122dp"
+            android:layout_height="127dp"
+            android:gravity="bottom|center_horizontal"
+            android:text="@string/c2"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/editText10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPersonName"
+            android:textColor="#6A1B9A"
+            android:textColorHighlight="#6A1B9A" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#DD0707" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="172dp"
+            android:layout_height="85dp"
+            android:gravity="bottom|center_horizontal"
+            android:text="@string/descripcion"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/editText11"
+            android:layout_width="372dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/pistaDescripcion"
+            android:inputType="textPersonName"
+            android:textColor="#6A1B9A"
+            android:textColorHighlight="#6A1B9A" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="145dp"
+            android:layout_height="93dp"
+            android:onClick="guardar"
+            android:text="@string/guardar"
+            android:background="#FFFFFF"
+            style="@style/Widget.AppCompat.Button.Borderless" />
+    </LinearLayout>
+</ScrollView>

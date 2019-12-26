@@ -16,4 +16,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CampoTextoPutpura" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#6A1B9A</item>
+        <item name="colorControlActivated">#6A1B9A</item>
+        <item name="colorControlHighlight">#6A1B9A</item>
+    </style>
+
 </resources>

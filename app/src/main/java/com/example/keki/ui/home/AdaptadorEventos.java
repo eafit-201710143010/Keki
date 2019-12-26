@@ -38,7 +38,7 @@ public class AdaptadorEventos extends BaseAdapter {
 
     @Override
     public long getItemId(int position){
-        return 0;
+        return eventoList.get(position).getId();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

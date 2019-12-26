@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.keki.Index;
+import com.example.keki.MapsActivity;
 import com.example.keki.R;
 import com.example.keki.ui.BaseDeDatos;
 import com.example.keki.ui.home.Evento;
@@ -34,12 +37,9 @@ public class CreateFragment extends Fragment {
 
     Uri imageUri;
     ImageView foto;
-    Button button;
-    EditText etTitulo;
-    EditText etDate;
-    EditText etTime;
-    Button crear;
-    TextView tv;
+    Button button, crear;
+    EditText etTitulo, etDate, etTime;
+    TextView error1, error3, error4;
 
     private static final int PICK_IMAGE = 100;
 
@@ -63,13 +63,15 @@ public class CreateFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        foto = (ImageView) root.findViewById(R.id.prueba);
-        button = (Button) root.findViewById(R.id.button3);
-        etTitulo = (EditText) root.findViewById(R.id.editText5);
-        etDate = (EditText) root.findViewById(R.id.editText6);
-        etTime = (EditText) root.findViewById(R.id.editText7);
-        crear = (Button) root.findViewById(R.id.button4);
-        tv = (TextView) root.findViewById(R.id.textView8);
+        foto = root.findViewById(R.id.prueba);
+        button = root.findViewById(R.id.button3);
+        etTitulo = root.findViewById(R.id.editText5);
+        etDate = root.findViewById(R.id.editText6);
+        etTime = root.findViewById(R.id.editText7);
+        crear = root.findViewById(R.id.button4);
+        error1 = root.findViewById(R.id.error1);
+        error3 = root.findViewById(R.id.error3);
+        error4 = root.findViewById(R.id.error4);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,17 +97,44 @@ public class CreateFragment extends Fragment {
         crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String fecha = String.valueOf(etDate.getText());
                 String hora = String.valueOf(etTime.getText());
-                Date date = new Date(String.valueOf(etDate.getText()));
-                Time time = new Time(Integer.parseInt(hora.substring(0,2)),Integer.parseInt(hora.substring(3,5)), 0);
+                String titulo = String.valueOf(etTitulo.getText());
 
-                Evento e = new Evento(String.valueOf(etTitulo.getText()), date, time, R.drawable.pro_2);
+                Date date = null;
+                Time time = null;
 
-                BaseDeDatos.eventos.add(e);
+                if(titulo.length()==0 || titulo.length()>15){
+                    error1.setText("Ingrese un título menor a 15 caracteres y mayor a 0 caracteres");
+                }else{
+                    error1.setText("");
+                }
 
+                if(fecha.length()>0){
+                    date = new Date(Integer.parseInt(fecha.substring(6)), Integer.parseInt(fecha.substring(3, 5)), Integer.parseInt(fecha.substring(0, 2)));
+                    error3.setText("");
+                }else{
+                    error3.setText("Seleccione una fecha");
+                }
 
-                tv.setText(hora);
+                if(hora.length()>0){
+                    boolean aux = hora.contains("p");
+                    time = new Time(Integer.valueOf(hora.substring(0,2)) + ((aux)? 0 :12), Integer.valueOf(hora.substring(3,5)), 0);
+                    error4.setText("");
+                }else{
+                    error4.setText("Seleccione una hora");
+                }
+
+                error1.setGravity(Gravity.CENTER);
+                error3.setGravity(Gravity.CENTER);
+                error4.setGravity(Gravity.CENTER);
+
+                if(fecha.length()>0 && hora.length()>0 && titulo.length()>0) {
+                    BaseDeDatos.eventos.add(new Evento(String.valueOf(etTitulo.getText()), date, time, R.drawable.pro_2));
+                    Intent i = new Intent(getActivity(), MapsActivity.class);
+                    i.putExtra("id", BaseDeDatos.eventos.get(BaseDeDatos.eventos.size()-1).getId());
+                    startActivity(i);
+                }
             }
         });
 

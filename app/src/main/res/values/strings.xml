@@ -13,7 +13,6 @@
     <string name="title_activity_inicio2">Inicio2</string>
     <string name="title_home">Inicio</string>
     <string name="title_profile">Perfil</string>
-    <string name="title_chat">Chat</string>
     <string name="title_activity_home">Eventos</string>
     <string name="title_activity_index">Index</string>
     <string name="title_create">Crear</string>
@@ -24,4 +23,20 @@
     <string name="hora">Hora</string>
     <string name="añadir">Crear Evento</string>
     <string name="error1">Número inválido, ingrese nuevamente</string>
+    <string name="fotoDePerfil">Foto de perfil</string>
+    <string name="descripcion">Descripción</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="ubicacion">Ubicación: </string>
+    <string name="editPerfil">Editar perfil</string>
+    <string name="pistaDescripcion">Breve descripción de su persona (Opcional)</string>
+    <string name="guardar">Guardar</string>
+    <string name="detalles">Detalles evento</string>
+    <string name="costo">Costo del evento</string>
+    <string name="gratis">Gratis</string>
+    <string name="pago">Pago</string>
+    <string name="asistir">Asistir</string>
+    <string name="porAsistir">Eventos por asistir</string>
+    <string name="creados">Eventos creados</string>
+    <string name="editar">Editar evento</string>
+    <string name="editDetalles">Editar evento</string>
 </resources>
