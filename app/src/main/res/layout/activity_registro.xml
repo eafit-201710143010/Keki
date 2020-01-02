@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="258dp"
+            android:layout_width="match_parent"
             android:layout_height="148dp"
             android:gravity="bottom|center_horizontal"
             android:text="@string/tel"
@@ -58,14 +58,62 @@
             android:layout_marginTop="11dp"
             android:textColor="#DD0707" />
 
+        <TextView
+            android:id="@+id/textViewContra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|center_horizontal"
+            android:text="@string/contra"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextContra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:textColor="#6A1B9A"
+            android:textColorHighlight="#6A1B9A"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textViewError2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:textColor="#DD0707"
+            android:visibility="gone" />
+
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/botonComprobar"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:onClick="comprobar"
             android:text="@string/comp" />
+
+        <Button
+            android:id="@+id/botonIniciar"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:onClick="iniciar"
+            android:text="@string/iniciar"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/botonEditar"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:onClick="editar"
+            android:text="@string/editarNumero"
+            android:visibility="gone" />
 
     </LinearLayout>
 </ScrollView>

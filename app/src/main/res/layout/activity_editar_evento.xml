@@ -143,13 +143,6 @@
             android:onClick="siguiente"
             android:text="@string/guardar" />
 
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="60sp"
-            android:visibility="invisible" />
-
     </LinearLayout>
 
 </ScrollView>

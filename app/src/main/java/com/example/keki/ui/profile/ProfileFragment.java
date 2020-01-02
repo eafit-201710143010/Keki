@@ -6,12 +6,14 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.keki.EditarPerfil;
 import com.example.keki.R;
+import com.example.keki.Registro;
 import com.example.keki.VistaEventos;
 import com.example.keki.ui.BaseDeDatos;
 import com.example.keki.ui.home.AdaptadorEventos;
@@ -31,7 +34,8 @@ public class ProfileFragment extends Fragment {
     TextView tvNombre;
     TextView tvDescripcion;
     ListView lvEventos;
-    Button editarPerfil, porAsistir, creados;
+    Button editarPerfil, porAsistir, creados, cerrar;
+    ScrollView sv;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,8 +48,33 @@ public class ProfileFragment extends Fragment {
         editarPerfil = root.findViewById(R.id.button8);
         porAsistir = root.findViewById(R.id.button11);
         creados = root.findViewById(R.id.button12);
+        sv = root.findViewById(R.id.scrollView);
+        cerrar = root.findViewById(R.id.botonCerrar);
 
-        AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.usuario.getEventos());
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseDeDatos.usuario = null;
+                Intent i = new Intent(getActivity(), Registro.class);
+                startActivity(i);
+            }
+        });
+
+        lvEventos.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                sv.requestDisallowInterceptTouchEvent(true);
+                int action = event.getActionMasked();
+                switch (action) {
+                    case MotionEvent.ACTION_UP:
+                        sv.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.porAsistir());
 
         Drawable originalDrawable = getResources().getDrawable(BaseDeDatos.usuario.getImagen());
         Bitmap originalBitmap = ((BitmapDrawable) originalDrawable).getBitmap();
@@ -74,7 +103,7 @@ public class ProfileFragment extends Fragment {
                 creados.setTextColor(getResources().getColor(R.color.negro));
                 porAsistir.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 porAsistir.setTextColor(getResources().getColor(R.color.blanco));
-                AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.usuario.getEventos());
+                AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.porAsistir());
                 lvEventos.setAdapter(adap);
             }
         });

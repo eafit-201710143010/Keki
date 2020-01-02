@@ -48,20 +48,19 @@ public class AdaptadorEventos extends BaseAdapter {
 
         convertView = LayoutInflater.from(context).inflate(R.layout.list_item_evento, null);
 
-        ImageView imv = (ImageView) convertView.findViewById(R.id.img);
-        TextView tv1 = (TextView) convertView.findViewById(R.id.titulo);
-        TextView tv2 = (TextView) convertView.findViewById(R.id.fecha);
+        ImageView imv = convertView.findViewById(R.id.img);
+        TextView tv1 = convertView.findViewById(R.id.titulo);
+        TextView tv2 = convertView.findViewById(R.id.fecha);
 
         imv.setImageResource(item.getImg());
         tv1.setText(item.getNombre());
         tv1.setGravity(Gravity.CENTER_VERTICAL);
         tv1.setGravity(Gravity.CENTER);
         tv1.setTextSize(27);
-        // tv1.setPaddingRelative(R.id.img,R.id.parent,R.id.parent,R.id.fecha);
+
         tv2.setText(item.getFecha().toString().substring(0,11));
         tv2.setGravity(Gravity.BOTTOM);
         tv2.setGravity(Gravity.CENTER);
-        // tv2.setPaddingRelative(R.id.img,R.id.titulo,R.id.parent,R.id.parent);
 
         return convertView;
     }

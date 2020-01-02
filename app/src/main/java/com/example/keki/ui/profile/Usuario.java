@@ -1,7 +1,9 @@
 package com.example.keki.ui.profile;
 
+import com.example.keki.ui.BaseDeDatos;
 import com.example.keki.ui.home.Evento;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Usuario {
@@ -10,12 +12,13 @@ public class Usuario {
     List<Evento> eventos;
     int imagen;
 
-    public Usuario(String nombre, String id, String descripcion, List<Evento> eventos, int imagen){
+    public Usuario(String nombre, String id, String descripcion, int imagen){
         this.nombre = nombre;
         this.id = id;
         this.descripcion = descripcion;
-        this.eventos = eventos;
+        this.eventos = new LinkedList<>();
         this.imagen = imagen;
+        telefono = "";
     }
 
     public String getNombre(){ return nombre; }
@@ -23,7 +26,7 @@ public class Usuario {
     public String getDescripcion(){ return descripcion; }
     public List<Evento> getEventos(){ return eventos; }
     public int getImagen(){ return imagen; }
-    public String getTelefono() { return telefono; }
+    public String getTelefono(){ return telefono; }
 
     public void setNombre(String nombre){ this.nombre = nombre; }
     public void setDescripcion(String descripcion){ this.descripcion = descripcion; }
@@ -37,10 +40,10 @@ public class Usuario {
     }
 
     public void añadirEvento(Evento e){
-        eventos.add(e);
+        BaseDeDatos.asistirAEventos(e.getId());
     }
 
     public void borrarEvento(Evento e){
-        eventos.remove(e);
+        BaseDeDatos.cancelarAsistencia(e.getId());
     }
 }

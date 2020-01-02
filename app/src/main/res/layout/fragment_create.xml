@@ -119,11 +119,12 @@
             android:text="@string/añadir" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/pro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textSize="60sp"
-            android:visibility="invisible" />
+            app:fontFamily="@font/product_regular" />
 
     </LinearLayout>
 

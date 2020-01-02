@@ -22,6 +22,8 @@ public class Inicio extends AppCompatActivity {
         boolean aux2 = false;
         String telefono = getIntent().getStringExtra("telefono");
 
+        Toast.makeText(this, telefono, Toast.LENGTH_SHORT).show();
+
         if(aux)
              aux2 = BaseDeDatos.buscarUsuario(telefono);
 
@@ -36,6 +38,7 @@ public class Inicio extends AppCompatActivity {
                 ;
             }, DURACION);
         }else{
+            BaseDeDatos.iniciarSesion(telefono);
             new Handler().postDelayed(new Runnable() {
                 public void run() {
                     Intent intent = new Intent(Inicio.this, Index.class);

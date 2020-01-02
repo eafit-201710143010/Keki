@@ -30,7 +30,8 @@ import java.util.LinkedList;
 public class Formulario extends AppCompatActivity {
 
     Uri imageUri;
-    EditText etDate;
+    EditText etDate, nombre, id, fecha, descripcion, contrasena;
+    TextView err1, err2, err3, err4;
     Button cargar;
     ImageView imageView;
 
@@ -52,9 +53,18 @@ public class Formulario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
 
-        etDate = (EditText) findViewById(R.id.editText4);
-        cargar = (Button) findViewById(R.id.button5);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        etDate = findViewById(R.id.editText4);
+        cargar = findViewById(R.id.button5);
+        imageView = findViewById(R.id.imageView);
+        nombre = findViewById(R.id.editText3);
+        fecha = findViewById(R.id.editText4);
+        descripcion = findViewById(R.id.editText9);
+        contrasena = findViewById(R.id.editTextContra1);
+        err1 = findViewById(R.id.textView12);
+        err2 = findViewById(R.id.textView13);
+        err3 = findViewById(R.id.textView14);
+        err4 = findViewById(R.id.errContra1);
+
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +72,7 @@ public class Formulario extends AppCompatActivity {
             }
         });
 
-        EditText id = (EditText) findViewById(R.id.editText2);
+        id = findViewById(R.id.editText2);
         id.setText("@");
 
         cargar.setOnClickListener(new View.OnClickListener() {
@@ -104,20 +114,14 @@ public class Formulario extends AppCompatActivity {
         recogerFecha.show();
     }
 
-    private void consultas(){
-        ids = new String[5];
-    }
-
     public void siguiente(View view){
+        String id = String.valueOf(this.id.getText());
+        String nombre = String.valueOf(this.nombre.getText());
+        String fecha = String.valueOf(this.fecha.getText());
+        String descripcion = String.valueOf(this.descripcion.getText());
+        String contrasena = String.valueOf(this.contrasena.getText());
 
-        consultas();
-
-        String id = String.valueOf(((EditText) findViewById(R.id.editText2)).getText());
-        String nombre = String.valueOf(((EditText) findViewById(R.id.editText3)).getText());
-        String fecha = String.valueOf(((EditText) findViewById(R.id.editText4)).getText());
-        String descripcion = String.valueOf(((EditText) findViewById(R.id.editText9)).getText());
-
-        boolean idDisponible = (Arrays.asList(ids).contains(id))? false: true;
+        boolean idDisponible = BaseDeDatos.idDisponible(id);
         boolean idLongitud = (id.length()>5 && id.length()<15)? true: false;
         boolean idValido = true;
 
@@ -128,8 +132,6 @@ public class Formulario extends AppCompatActivity {
 
         boolean idDef = idDisponible && idLongitud && idValido;
 
-        TextView err1 = (TextView) findViewById(R.id.textView12);
-
         if(!idDisponible)
             err1.setText("El usuario ingresado no está disponible");
         else if(!idLongitud)
@@ -139,26 +141,21 @@ public class Formulario extends AppCompatActivity {
         else
             err1.setText("");
 
-        err1.setGravity(Gravity.CENTER);
-
         boolean nombreValido = (nombre.length()<15 && nombre.length()>2)? true: false;
-
-        TextView err2 = (TextView) findViewById(R.id.textView13);
 
         if(!nombreValido)
             err2.setText("El nombre ingresado debe tener entre 3 y 15 dígitos");
         else
             err2.setText("");
 
-        err2.setGravity(Gravity.CENTER);
-
-        TextView err3 = (TextView) findViewById(R.id.textView14);
-
         boolean fechaValida = false;
-
+        int edad = fechaValida(fecha);
+        Toast.makeText(this, edad + "", Toast.LENGTH_SHORT).show();
         if(fecha.length() > 0){
-            if (!fechaValida(fecha))
+            if (edad < 18){
+                fechaValida = false;
                 err3.setText("Debe ser mayor de 18 años de edad");
+            }
             else {
                 fechaValida = true;
                 err3.setText("");
@@ -168,9 +165,19 @@ public class Formulario extends AppCompatActivity {
             err3.setText("Seleccione una fecha");
         }
 
-        err3.setGravity(Gravity.CENTER);
+        boolean contraValida = contrasena.length() >= 8 && contrasena.length() <=15;
 
-        if(idDef && nombreValido && fechaValida){
+        if(contraValida)
+            err4.setText("");
+        else
+            err4.setText("Su contraseña debe conterner entre 8 y 15 caracteres");
+
+        err1.setGravity(Gravity.CENTER);
+        err2.setGravity(Gravity.CENTER);
+        err3.setGravity(Gravity.CENTER);
+        err4.setGravity(Gravity.CENTER);
+
+        if(idDef && nombreValido && fechaValida && contraValida){
             SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferencias.edit();
 
@@ -179,38 +186,38 @@ public class Formulario extends AppCompatActivity {
             editor.putString("telefono", telefono);
             editor.commit();
 
+            Usuario u = new Usuario(nombre, id, descripcion, R.drawable.pro_1);
+            u.setTelefono(telefono);
+            BaseDeDatos.añadirUsuario(u, contrasena, edad);
             Intent i = new Intent(this, Index.class);
-            BaseDeDatos.usuarios.add(new Usuario(nombre, id, descripcion, new LinkedList<Evento>(), R.drawable.pro_1));
-            BaseDeDatos.usuarios.get(BaseDeDatos.usuarios.size()-1).setTelefono(telefono);
-            BaseDeDatos.buscarUsuario(telefono);
             startActivity(i);
         }
     }
 
-    private boolean fechaValida(String fecha){
+    private int fechaValida(String fecha){
         Date fec = new Date(Integer.parseInt(fecha.substring(6)) - 1900, Integer.parseInt(fecha.substring(3,5)) - 1, Integer.parseInt(fecha.substring(0,2)));
 
         Date acfec = new Date();
 
-        if(acfec.getYear() - fec.getYear() > 18) {
-            return true;
+        if((acfec.getYear() - fec.getYear()) > 18) {
+            return acfec.getYear() - fec.getYear();
         }
         else if(acfec.getYear() - fec.getYear() == 18) {
             if (acfec.getMonth() < fec.getMonth()) {
-                return false;
+                return 0;
             }
             else if (acfec.getMonth() > fec.getMonth()) {
-                return true;
+                return acfec.getYear() - fec.getYear();
             }
             else if (acfec.getDay() >= fec.getDay()) {
-                return true;
+                return acfec.getYear() - fec.getYear();
             }
             else {
-                return false;
+                return 0;
             }
         }
         else {
-            return false;
+            return 0;
         }
     }
 }

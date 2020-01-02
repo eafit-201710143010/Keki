@@ -22,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BaseDeDatos.iniciar();
-
         SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
         final String telefono = preferencias.getString("telefono", "");
 

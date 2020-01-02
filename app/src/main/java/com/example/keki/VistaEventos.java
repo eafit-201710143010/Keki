@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.keki.ui.BaseDeDatos;
 import com.example.keki.ui.home.Evento;
@@ -27,6 +29,7 @@ public class VistaEventos extends AppCompatActivity implements OnMapReadyCallbac
     private TextView titulo, creador, fecha, descripcion, costo;
     private Button asistencia, editar;
     private Evento evento;
+    private View aux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,6 @@ public class VistaEventos extends AppCompatActivity implements OnMapReadyCallbac
 
         evento = BaseDeDatos.buscar(id);
 
-
         titulo = findViewById(R.id.titulo);
         creador = findViewById(R.id.creador);
         fecha = findViewById(R.id.fecha);
@@ -49,12 +51,29 @@ public class VistaEventos extends AppCompatActivity implements OnMapReadyCallbac
         costo = findViewById(R.id.costo);
         asistencia = findViewById(R.id.button6);
         editar = findViewById(R.id.button10);
+        aux = findViewById(R.id.aux);
 
-        if(evento.getIdCreador() == BaseDeDatos.usuario.getId()){
+        aux.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                    default:
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+        if(evento.getIdCreador().equals(BaseDeDatos.usuario.getId())){
             editar.setVisibility(View.VISIBLE);
         }
 
-        if(BaseDeDatos.usuario.getEventos().contains(evento)){
+        if(BaseDeDatos.vaAAsistir(evento)){
             asistencia.setText("Cancelar asistencia");
         }else{
             asistencia.setText("Asistir");

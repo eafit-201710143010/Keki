@@ -3,7 +3,7 @@
     <string name="quequi">¿Qué quieres hacer hoy?</string>
     <string name="K">K</string>
     <string name="keki">KeKi</string>
-    <string name="tel">Número celular:</string>
+    <string name="tel">Número celular</string>
     <string name="comp">Comprobar</string>
     <string name="form">Registro</string>
     <string name="c1">Usuario</string>
@@ -39,4 +39,10 @@
     <string name="creados">Eventos creados</string>
     <string name="editar">Editar evento</string>
     <string name="editDetalles">Editar evento</string>
+    <string name="cerrar">Cerrar sesión</string>
+    <string name="editarNumero">Cambiar número</string>
+    <string name="iniciar">Iniciar sesión</string>
+    <string name="contra">Contraseña</string>
+    <string name="ayuda">Ingrese ubicación o arrastre el marcador</string>
+    <string name="buscar">Buscar</string>
 </resources>

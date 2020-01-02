@@ -13,16 +13,16 @@ import com.example.keki.ui.BaseDeDatos;
 
 public class EditarPerfil extends AppCompatActivity {
 
-    EditText nombre;
-    EditText descripcion;
+    EditText nombre, descripcion;
+    TextView err;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
 
-        nombre = (EditText) findViewById(R.id.editText10);
-        descripcion = (EditText) findViewById(R.id.editText11);
+        nombre = findViewById(R.id.editText10);
+        descripcion = findViewById(R.id.editText11);
 
         nombre.setText(BaseDeDatos.usuario.getNombre());
         descripcion.setText(BaseDeDatos.usuario.getDescripcion());
@@ -33,7 +33,7 @@ public class EditarPerfil extends AppCompatActivity {
 
         boolean nombreValido = (nombre.length()<15 && nombre.length()>2)? true: false;
 
-        TextView err = (TextView) findViewById(R.id.textView22);
+        err = findViewById(R.id.textView22);
 
         if(!nombreValido)
             err.setText("El nombre ingresado debe tener entre 3 y 15 dígitos");

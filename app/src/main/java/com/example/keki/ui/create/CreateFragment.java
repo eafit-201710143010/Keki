@@ -16,12 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.keki.Index;
 import com.example.keki.MapsActivity;
 import com.example.keki.R;
 import com.example.keki.ui.BaseDeDatos;
@@ -130,9 +128,10 @@ public class CreateFragment extends Fragment {
                 error4.setGravity(Gravity.CENTER);
 
                 if(fecha.length()>0 && hora.length()>0 && titulo.length()>0) {
-                    BaseDeDatos.eventos.add(new Evento(String.valueOf(etTitulo.getText()), date, time, R.drawable.pro_2));
+                    Evento e = new Evento(String.valueOf(etTitulo.getText()), date, time, R.drawable.eventos);
+                    BaseDeDatos.añadirEvento1(e);
                     Intent i = new Intent(getActivity(), MapsActivity.class);
-                    i.putExtra("id", BaseDeDatos.eventos.get(BaseDeDatos.eventos.size()-1).getId());
+                    i.putExtra("id", -1);
                     startActivity(i);
                 }
             }

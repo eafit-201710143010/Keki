@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,8 +24,8 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        lv1 = (ListView) root.findViewById(R.id.listView);
-        AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.eventos);
+        lv1 = root.findViewById(R.id.listView);
+        AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.getEventos());
 
         lv1.setAdapter(adap);
 

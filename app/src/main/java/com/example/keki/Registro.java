@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,16 +21,34 @@ import java.sql.DriverManager;
 
 public class Registro extends AppCompatActivity {
 
+    EditText nume, contra;
+    Button comprobar, iniciar, editar;
+    TextView tvContra, err2;
+    String num;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+
+        nume = findViewById(R.id.editText);
+        contra = findViewById(R.id.editTextContra);
+        comprobar = findViewById(R.id.botonComprobar);
+        iniciar = findViewById(R.id.botonIniciar);
+        editar = findViewById(R.id.botonEditar);
+        tvContra = findViewById(R.id.textViewContra);
+        err2 = findViewById(R.id.textViewError2);
+
+        SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+
+        editor.putString("telefono", "");
+        editor.commit();
     }
 
     public void comprobar(View v){
-
-        EditText nume = findViewById(R.id.editText);
-        String num = String.valueOf(nume.getText());
+        num = String.valueOf(nume.getText());
 
         boolean longitud = (num.length()==10)? true: false;
         boolean caracteres = true;
@@ -50,22 +69,19 @@ public class Registro extends AppCompatActivity {
         TextView err = findViewById(R.id.textView11);
 
         if(longitud && caracteres && inicio && !BaseDeDatos.buscarUsuario(num)) {
-            agregarCategoria();
-
             Intent i = new Intent(this, Formulario.class);
             i.putExtra("telefono", num);
             startActivity(i);
-        }else if(BaseDeDatos.buscarUsuario(num)){
-            agregarCategoria();
-
-            SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferencias.edit();
-
-            editor.putString("telefono", num);
-            editor.commit();
-
-            Intent i = new Intent(this, Index.class);
-            startActivity(i);
+        }else if(BaseDeDatos.buscarUsuario(num) && longitud && caracteres && inicio){
+            contra.setText("");
+            contra.setVisibility(View.VISIBLE);
+            iniciar.setVisibility(View.VISIBLE);
+            editar.setVisibility(View.VISIBLE);
+            tvContra.setVisibility(View.VISIBLE);
+            err2.setText("");
+            err2.setVisibility(View.VISIBLE);
+            comprobar.setVisibility(View.GONE);
+            nume.setEnabled(false);
         }
 
         if(!longitud)
@@ -80,29 +96,29 @@ public class Registro extends AppCompatActivity {
         err.setGravity(Gravity.CENTER);
     }
 
-    public Connection conexion(){
-        Connection conexion = null;
-
-        try{
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-            Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:jtds:sqlserver://127.0.0.1:3306;databaseName=Keki;user=keki;password=wgnJLZ55;");
-        }catch(Exception e){
-            Toast.makeText(this,"UNO:" + e.getMessage().toString(),Toast.LENGTH_LONG).show();
-        }
-        return conexion;
+    public void editar(View view){
+        contra.setVisibility(View.GONE);
+        iniciar.setVisibility(View.GONE);
+        editar.setVisibility(View.GONE);
+        tvContra.setVisibility(View.GONE);
+        err2.setVisibility(View.GONE);
+        comprobar.setVisibility(View.VISIBLE);
+        nume.setEnabled(true);
     }
 
-    public void agregarCategoria(){
-        // try{
-            Connection pst = conexion();
-            // .prepareStatement("INSERT INTO Categoria (categoria) values(\"fiesta\")");
-            // pst.executeUpdate();
-            /*
-        }catch(SQLException e){
-            //Toast.makeText(this,"DOS:" + e.getMessage().toString(),Toast.LENGTH_LONG).show();
-        }*/
+    public void iniciar(View view){
+        if(BaseDeDatos.comprobarContra(String.valueOf(contra.getText()), String.valueOf(nume.getText()))){
+
+            SharedPreferences preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferencias.edit();
+
+            editor.putString("telefono", num);
+            editor.commit();
+
+            Intent i = new Intent(this, Index.class);
+            startActivity(i);
+        }else{
+            err2.setText("La contraseña no coincide");
+        }
     }
 }

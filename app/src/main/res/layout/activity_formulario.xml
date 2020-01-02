@@ -89,6 +89,35 @@
             android:textColor="#DD0707" />
 
         <TextView
+            android:id="@+id/textViewContra1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/contra"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/editTextContra1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColor="#6A1B9A"
+            android:textColorHighlight="#6A1B9A"
+            android:theme="@style/CampoTextoPutpura" />
+
+        <TextView
+            android:id="@+id/errContra1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#DD0707" />
+
+        <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -178,10 +207,11 @@
             android:text="@string/regi" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/pro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:visibility="invisible" />
+            android:gravity="center"
+            android:textSize="60sp"
+            app:fontFamily="@font/product_regular" />
     </LinearLayout>
 </ScrollView>

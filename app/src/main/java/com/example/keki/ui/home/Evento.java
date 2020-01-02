@@ -6,7 +6,6 @@ import java.sql.Time;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 public class Evento {
 
@@ -15,22 +14,18 @@ public class Evento {
     Date fecha;
     Time hora;
     double lat, lng;
-    List<String> asistentes;
-    static int aux = 0;
 
     public Evento(String nombre, Date fecha, Time hora, int img){
         this.fecha = fecha;
         this.hora = hora;
         this.nombre = nombre;
         this.img = img;
-        this.id = aux;
+        this.id = -1;
         costo = 0;
         descripcion = "";
         idCreador = "";
         lat = 6.246445607314125;
         lng = -75.57117663323879;
-        asistentes = new LinkedList<>();
-        aux++;
     }
 
     @NonNull

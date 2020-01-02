@@ -33,6 +33,7 @@ public class EditarEvento extends AppCompatActivity {
     Button button, crear;
     Evento evento;
     ImageView foto;
+    int id;
 
     private static final int PICK_IMAGE = 100;
 
@@ -63,8 +64,8 @@ public class EditarEvento extends AppCompatActivity {
         error3 = findViewById(R.id.error3);
         error4 = findViewById(R.id.error4);
         foto = findViewById(R.id.prueba);
-
-        evento = BaseDeDatos.buscar(getIntent().getIntExtra("id",-1));
+        id = getIntent().getIntExtra("id",-1);
+        evento = BaseDeDatos.buscar(id);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,11 +143,9 @@ public class EditarEvento extends AppCompatActivity {
         error4.setGravity(Gravity.CENTER);
 
         if(fecha.length()>0 && hora.length()>0 && titulo.length()>0) {
-            BaseDeDatos.buscar(evento.getId()).setNombre(titulo);
-            BaseDeDatos.buscar(evento.getId()).setFecha(date);
-            BaseDeDatos.buscar(evento.getId()).setHora(time);
+            BaseDeDatos.editarEvento1(titulo, date, time, id);
             Intent i = new Intent(this, MapsActivity.class);
-            i.putExtra("id", BaseDeDatos.eventos.get(BaseDeDatos.eventos.size()-1).getId());
+            i.putExtra("id", id);
             startActivity(i);
         }
     }

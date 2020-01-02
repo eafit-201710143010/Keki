@@ -2,13 +2,22 @@ package com.example.keki;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +31,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.w3c.dom.Text;
+import java.io.IOException;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
@@ -30,9 +40,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker marker;
     private Button button;
     private TextView tv, err1, err2;
-    private EditText etDescricion, etCosto;
+    private EditText etDescricion, etCosto, etUbicacion;
     private RadioGroup radioGroup;
-    Evento evento;
+    private Evento evento;
+    private Geocoder geo;
+    private final int maxResultados = 1;
+    private List<Address> adress;
+    private ListView lv;
+    private View aux;
+    private ScrollView sv;
+    AdaptadorResultados adap;
+    int id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +69,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         err1 = findViewById(R.id.textView23);
         err2 = findViewById(R.id.textView24);
         radioGroup = findViewById(R.id.opcionesCosto);
+        etUbicacion = findViewById(R.id.busqueda);
+        lv = findViewById(R.id.listView);
+        sv = findViewById(R.id.sv);
+        geo = new Geocoder(this);
+        aux = findViewById(R.id.aux);
 
-        evento = BaseDeDatos.buscar(getIntent().getIntExtra("id", -1));
+        aux.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                    default:
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                }
 
-        etDescricion.setText(evento.getDescripcion());
-        radioGroup.check((evento.getCosto()==0)? R.id.gratis: R.id.pago);
-        if(evento.getCosto()!=0)
-            etCosto.setText(Integer.toString(evento.getCosto()));
+                return false;
+            }
+        });
+
+        id = getIntent().getIntExtra("id", -1);
+        evento = BaseDeDatos.buscar(id);
+
+        if(evento==null)
+            evento = BaseDeDatos.aux;
+
+        lv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                sv.requestDisallowInterceptTouchEvent(true);
+                int action = event.getActionMasked();
+                switch (action) {
+                    case MotionEvent.ACTION_UP:
+                        sv.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                marker.remove();
+
+                LatLng normal = new LatLng(((Address) adap.getItem(position)).getLatitude(), ((Address) adap.getItem(position)).getLongitude());
+                marker = mMap.addMarker(new MarkerOptions().position(normal).draggable(true).title(evento.getNombre()));
+
+                tv.setText("Ubicación: " + marker.getPosition().latitude + ", " + marker.getPosition().longitude);
+                tv.setGravity(Gravity.CENTER);
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(normal,15));
+            }
+        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -69,11 +137,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+
+        etDescricion.setText(evento.getDescripcion());
+        radioGroup.check((evento.getCosto()==0)? R.id.gratis: R.id.pago);
+        if(evento.getCosto()!=0)
+            etCosto.setText(Integer.toString(evento.getCosto()));
+    }
+
+    public void buscar(View view){
+        try {
+            adress = geo.getFromLocationName(String.valueOf(etUbicacion.getText()), maxResultados);
+            lv.setVisibility(View.VISIBLE);
+
+            adap = new AdaptadorResultados(adress, this);
+            lv.setAdapter(adap);
+        } catch (IOException e) {
+            Toast.makeText(this,"no se encontró ubicación", Toast.LENGTH_SHORT).show();
+            lv.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+            @Override
+            public void onCameraMove() {
+
+            }
+        });
 
         LatLng normal = new LatLng(evento.getLat(), evento.getLng());
         marker = mMap.addMarker(new MarkerOptions().position(normal).draggable(true).title(evento.getNombre()));
@@ -81,7 +174,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tv.setText("Ubicación: " + marker.getPosition().latitude + ", " + marker.getPosition().longitude);
         tv.setGravity(Gravity.CENTER);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(normal,15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(normal,10));
         googleMap.setOnMarkerDragListener(this);
     }
 
@@ -116,6 +209,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             Intent i = new Intent(this, Index.class);
+            if(id == -1)
+                BaseDeDatos.añadirEvento2(evento);
+            else
+                BaseDeDatos.editarEvento2(evento);
             startActivity(i);
         }
     }
