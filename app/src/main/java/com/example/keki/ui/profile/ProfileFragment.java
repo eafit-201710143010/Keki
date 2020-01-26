@@ -34,7 +34,7 @@ public class ProfileFragment extends Fragment {
     TextView tvNombre;
     TextView tvDescripcion;
     ListView lvEventos;
-    Button editarPerfil, porAsistir, creados, cerrar;
+    Button editarPerfil, porAsistir, creados, cerrar, invitado;
     ScrollView sv;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,6 +47,7 @@ public class ProfileFragment extends Fragment {
         lvEventos = root.findViewById(R.id.eventosUsuario);
         editarPerfil = root.findViewById(R.id.button8);
         porAsistir = root.findViewById(R.id.button11);
+        invitado = root.findViewById(R.id.button13);
         creados = root.findViewById(R.id.button12);
         sv = root.findViewById(R.id.scrollView);
         cerrar = root.findViewById(R.id.botonCerrar);
@@ -103,6 +104,8 @@ public class ProfileFragment extends Fragment {
                 creados.setTextColor(getResources().getColor(R.color.negro));
                 porAsistir.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 porAsistir.setTextColor(getResources().getColor(R.color.blanco));
+                invitado.setBackgroundColor(getResources().getColor(R.color.gris));
+                invitado.setTextColor(getResources().getColor(R.color.negro));
                 AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.porAsistir());
                 lvEventos.setAdapter(adap);
             }
@@ -115,7 +118,23 @@ public class ProfileFragment extends Fragment {
                 creados.setTextColor(getResources().getColor(R.color.blanco));
                 porAsistir.setBackgroundColor(getResources().getColor(R.color.gris));
                 porAsistir.setTextColor(getResources().getColor(R.color.negro));
+                invitado.setBackgroundColor(getResources().getColor(R.color.gris));
+                invitado.setTextColor(getResources().getColor(R.color.negro));
                 AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.getEventosPorIdCreador(BaseDeDatos.usuario.getId()));
+                lvEventos.setAdapter(adap);
+            }
+        });
+
+        invitado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invitado.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                invitado.setTextColor(getResources().getColor(R.color.blanco));
+                porAsistir.setBackgroundColor(getResources().getColor(R.color.gris));
+                porAsistir.setTextColor(getResources().getColor(R.color.negro));
+                creados.setBackgroundColor(getResources().getColor(R.color.gris));
+                creados.setTextColor(getResources().getColor(R.color.negro));
+                AdaptadorEventos adap = new AdaptadorEventos(getActivity(), BaseDeDatos.getInvitados());
                 lvEventos.setAdapter(adap);
             }
         });

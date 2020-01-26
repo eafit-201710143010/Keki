@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Filtros">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/tittle_bar"
+            android:layout_width="413dp"
+            android:layout_height="87dp"
+            android:background="#6A1B9A" >
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/filtrarPor"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+                app:fontFamily="@font/product_blod_italic" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#6A1B9A"
+                android:text="@string/precio"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/button2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:text="@string/lugar"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/button3"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:text="@string/musica"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/button4"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:text="@string/categoría"
+                android:textColor="#000000" />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/gratis" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/rango" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/sinFiltro" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/sinFiltro" />
+
+            <RadioButton
+                android:id="@+id/radioButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/rangoPrecio" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/defCosto"
+            android:textColor="#000000"
+            android:textSize="18sp"/>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100000"
+            android:progress="50000"
+            android:visibility="gone" />
+
+        <SeekBar
+            android:id="@+id/seekBarDistancia"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100000"
+            android:progress="50000"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxblues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/blues"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxjazz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/jazz"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxrhythm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rhythm"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxrock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rock"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxrockEsp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rockEsp"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxmetal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/metal"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxdisco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/disco"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxtechno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/techno"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxpop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pop"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxska"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ska"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxreggae"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reggae"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxhip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hip"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxsalsa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/salsa"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxreggaeton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/reggaeton"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxvallenato"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vallenato"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxbachata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bachata"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxcrossover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/crossover"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxrap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rap"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxmusicaVivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/musicaVivo"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxbaile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/baile"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxpintura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pintura"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxgastronomia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gastronomia"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxdeporte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/deporte"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxacademia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/academia"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxclases"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/clases"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxfiesta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fiesta"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxrecorrido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recorrido"
+            android:visibility="gone" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="aplicar"
+            app:srcCompat="@drawable/ic_check_black_24dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -46,6 +46,8 @@ public class EditarPerfil extends AppCompatActivity {
             BaseDeDatos.usuario.setNombre(nom);
             BaseDeDatos.usuario.setDescripcion(String.valueOf(descripcion.getText()));
 
+            BaseDeDatos.actualizarInfo(nom, String.valueOf(descripcion.getText()));
+
             Intent i = new Intent(this, Index.class);
             startActivity(i);
         }

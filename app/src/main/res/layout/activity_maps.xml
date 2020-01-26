@@ -84,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editText8" />
 
         <RadioGroup
-            android:id="@+id/opcionesCosto"
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -114,7 +114,7 @@
             android:inputType="number"
             android:textColor="#6A1B9A"
             android:textColorHighlight="#6A1B9A"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +125,75 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textColor="#DD0707" />
+            android:textColor="#DD0707"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/invitados"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText8" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/publico" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/invitar" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/busquedaUsuario"
+                android:layout_width="259dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/pistaUsuario"
+                android:inputType="text"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button3"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:onClick="buscarUsuario"
+                android:text="@string/buscar"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/textView17"
@@ -133,11 +201,7 @@
             android:layout_height="wrap_content"
             android:text="@string/ubicacion"
             android:textColor="#000000"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/map"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textSize="18sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

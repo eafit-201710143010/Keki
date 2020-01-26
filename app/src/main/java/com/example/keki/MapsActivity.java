@@ -7,8 +7,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,25 +31,28 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
     private Marker marker;
-    private Button button;
+    private Button button, buscar;
     private TextView tv, err1, err2;
-    private EditText etDescricion, etCosto, etUbicacion;
-    private RadioGroup radioGroup;
+    private EditText etDescricion, etCosto, etUbicacion, etUsuario;
+    private RadioGroup radioGroup, rgInvitados;
     private Evento evento;
     private Geocoder geo;
     private final int maxResultados = 1;
     private List<Address> adress;
-    private ListView lv;
+    private ListView lv, lv1;
     private View aux;
     private ScrollView sv;
     AdaptadorResultados adap;
     int id;
+    LinkedList<String> usuarios;
+    LinkedList<String> usuariosInvitados = new LinkedList<>();
 
 
     @Override
@@ -68,12 +70,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         etCosto = findViewById(R.id.editText12);
         err1 = findViewById(R.id.textView23);
         err2 = findViewById(R.id.textView24);
-        radioGroup = findViewById(R.id.opcionesCosto);
+        radioGroup = findViewById(R.id.radioGroup);
         etUbicacion = findViewById(R.id.busqueda);
         lv = findViewById(R.id.listView);
         sv = findViewById(R.id.sv);
         geo = new Geocoder(this);
         aux = findViewById(R.id.aux);
+        rgInvitados = findViewById(R.id.radioGroup1);
+        etUsuario = findViewById(R.id.busquedaUsuario);
+        buscar = findViewById(R.id.button3);
+        lv1 = findViewById(R.id.listView1);
 
         aux.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -111,6 +117,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        final Context c = this;
+
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                etUsuario.setText("");
+                usuariosInvitados.add(usuarios.get((int) id));
+                AdaptadorUsuarios adap = new AdaptadorUsuarios(new LinkedList<String>(), c);
+
+                lv1.setAdapter(adap);
+                Toast.makeText(c, "Usuario invitado", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -130,10 +150,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.gratis){
-                    etCosto.setVisibility(View.INVISIBLE);
+                    etCosto.setVisibility(View.GONE);
+                    err2.setVisibility(View.GONE);
                     err2.setText("");
                 }else{
                     etCosto.setVisibility(View.VISIBLE);
+                    err2.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        rgInvitados.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.radioButton1){
+                    etUsuario.setVisibility(View.GONE);
+                    buscar.setVisibility(View.GONE);
+                }else{
+                    etUsuario.setVisibility(View.VISIBLE);
+                    buscar.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -154,6 +189,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (IOException e) {
             Toast.makeText(this,"no se encontró ubicación", Toast.LENGTH_SHORT).show();
             lv.setVisibility(View.GONE);
+        }
+    }
+
+    public void buscarUsuario(View view){
+        String usuario = String.valueOf(etUsuario.getText());
+
+        usuarios = BaseDeDatos.buscarUsuarios(usuario);
+
+        AdaptadorUsuarios adap = new AdaptadorUsuarios(usuarios, this);
+
+        lv1.setAdapter(adap);
+
+        if(usuarios.size()>0){
+            lv1.setVisibility(View.VISIBLE);
+        }else{
+            lv1.setVisibility(View.GONE);
         }
     }
 
@@ -208,11 +259,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 evento.setCosto(Integer.valueOf(String.valueOf(etCosto.getText())));
             }
 
-            Intent i = new Intent(this, Index.class);
-            if(id == -1)
-                BaseDeDatos.añadirEvento2(evento);
-            else
+            Intent i = new Intent(this, Categorias.class);
+            if(id == -1) {
+                if(rgInvitados.getCheckedRadioButtonId() == R.id.radioButton1) {
+                    BaseDeDatos.añadirEvento2(evento, false, new LinkedList<String>());
+                }else{
+                    BaseDeDatos.añadirEvento2(evento, true, usuariosInvitados);
+                }
+            }
+            else {
                 BaseDeDatos.editarEvento2(evento);
+                i.putExtra("id", id);
+            }
             startActivity(i);
         }
     }
